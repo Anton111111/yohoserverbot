@@ -3,8 +3,8 @@ Description=YoHoServerBot
 After=network.target
 
 [Service]
-WorkingDirectory=/path/to/bot/directory
-ExecStart=node /opt/yohoserverbot/build/bot.js
+WorkingDirectory=/home/anton/yohoserverbot
+ExecStart=node /home/anton/yohoserverbot/dist/bot.js
 Restart=on-failure
 
 [Install]
