@@ -1,0 +1,11 @@
+[Unit]
+Description=YoHoServerBot
+After=network.target
+
+[Service]
+WorkingDirectory=/path/to/bot/directory
+ExecStart=node /opt/yohoserverbot/build/bot.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
