@@ -9,8 +9,6 @@ const auth = async (ctx: Scenes.SceneContext, next: any) => {
     } else {
         ctx.scene.enter("login")
     }
-
-    return next()
 }
 
 export default auth
