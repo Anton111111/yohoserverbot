@@ -13,7 +13,6 @@ bot.use(session())
 const stage = new Scenes.Stage<Scenes.SceneContext>([loginScene, helpScene]);
 bot.use(stage.middleware())
 bot.use(auth)
-bot.command("login", ctx => ctx.scene.enter("login"));
 bot.command("help", ctx => ctx.scene.enter("help"));
 
 bot.catch((error: any) => {
@@ -21,6 +20,9 @@ bot.catch((error: any) => {
 });
 
 bot.launch();
+bot.telegram.setMyCommands([
+    { command: "help", description: "This help" }
+])
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"))
