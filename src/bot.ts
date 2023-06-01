@@ -1,31 +1,30 @@
-require('dotenv').config()
-import { Telegraf } from 'telegraf'
-import logger, { loggerWithCtx } from './util/logger'
-import { exec } from 'child_process';
+require("dotenv").config()
+import { Telegraf, Scenes, session } from "telegraf"
+import logger from "./util/logger"
+import loginScene from "./scenes/login";
+import helpScene from "./scenes/help";
+import auth from "./middlewares/auth";
 
-logger.info('Start YoHoServer Bot...');
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
 
-bot.command('hi', async (ctx) => {
-    ctx.reply('Yo, Ho!')
-});
+logger.info("Start YoHoServer Bot...");
+const bot = new Telegraf<Scenes.SceneContext>(process.env.TELEGRAM_BOT_TOKEN)
+bot.use(session())
 
-bot.command('goSleep', async (ctx) => {
-    ctx.reply('Went to bed...')
-    exec('systemctl suspend')
-});
-
+const stage = new Scenes.Stage<Scenes.SceneContext>([loginScene, helpScene]);
+bot.use(stage.middleware())
+bot.use(auth)
+bot.command("login", ctx => ctx.scene.enter("login"));
+bot.command("help", ctx => ctx.scene.enter("help"));
 
 bot.catch((error: any) => {
-    logger.error(undefined, 'Global error has happened, %O', error)
+    logger.error("Global error has happened, %O", error)
 });
-
 
 bot.launch();
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once("SIGINT", () => bot.stop("SIGINT"))
+process.once("SIGTERM", () => bot.stop("SIGTERM"))
 
 
 
