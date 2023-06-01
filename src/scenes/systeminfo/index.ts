@@ -3,7 +3,7 @@ import { Scenes } from "telegraf"
 import logger from "../../util/logger"
 import axios from "axios"
 import { delay } from "../../util/async"
-import { kill } from "process"
+import { kill, pid } from "process"
 import { bold, fmt } from "telegraf/format"
 import { humanFileSize } from "../../util/formating"
 
@@ -36,7 +36,10 @@ systemInfoScene.enter(async ctx => {
         }
     }
     // Dirty trick +1 because exec return shell script that start glances 
-    kill(p.pid + 1)
+    try {
+        p.kill()
+        kill(p.pid + 1)
+    } catch (e) { }
     ctx.reply(
         fmt`${bold`MemInfo:`} ${memInfo.percent}% (free: ${humanFileSize(memInfo.free)} from ${humanFileSize(memInfo.total)})
 ${bold`CPUInfo:`} ${cpuInfo.total}%
