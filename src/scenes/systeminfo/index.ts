@@ -30,7 +30,7 @@ systemInfoScene.enter(async ctx => {
     const p = exec("glances -t=1 --quiet -w --disable-webui >/dev/null")
     let cpuInfo: CPUInfo
     let memInfo: MemInfo
-    let sensorsInfo: Array<SensorsInfo> = []
+    let sensorsInfos: Array<SensorsInfo> = []
     while (!cpuInfo) {
         await delay(1000)
         try {
@@ -39,7 +39,7 @@ systemInfoScene.enter(async ctx => {
             response = await axios.get("http://127.0.0.1:61208/api/3/mem")
             memInfo = response.data as MemInfo
             response = await axios.get("http://127.0.0.1:61208/api/3/sensors")
-            sensorsInfo = response.data as Array<SensorsInfo>
+            sensorsInfos = response.data as Array<SensorsInfo>
         } catch (e) { }
     }
     // Dirty trick +1 because exec return shell script that start glances 
@@ -49,10 +49,10 @@ systemInfoScene.enter(async ctx => {
     } catch (e) { }
 
     let sensorsStr = ""
-    if (Object.entries(sensorsInfo).length > 0) {
+    if (sensorsInfos.length > 0) {
         sensorsStr = "<b>Sensors:</b>\n"
-        Object.entries(sensorsInfo).forEach(([key, value], index) => {
-            sensorsStr.concat(`${value.label}:<i>${value.value} ${value.unit}</i>\n`)
+        sensorsInfos.forEach((sensorsInfo) => {
+            sensorsStr.concat(`${sensorsInfo.label}:<i>${sensorsInfo.value} ${sensorsInfo.unit}</i>\n`)
         })
     }
 
