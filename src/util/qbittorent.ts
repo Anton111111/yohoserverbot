@@ -11,7 +11,8 @@ interface Torrent {
 
 export enum TorrentsListFilter {
     NONE = "",
-    Downloading = "downloading"
+    Downloading = "downloading",
+    Paused = "paused"
 }
 
 export async function getListOfTorrents(filter: TorrentsListFilter = TorrentsListFilter.NONE): Promise<Array<Torrent>> {
