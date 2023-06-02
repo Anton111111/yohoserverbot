@@ -7,6 +7,9 @@ import { humanFileSize } from "../../util/formating"
 
 interface CPUInfo {
     total: number
+    idle: number
+    system: number
+    user: number
 }
 
 interface MemInfo {
@@ -58,7 +61,7 @@ systemInfoScene.enter(async ctx => {
     }
 
     const memInfoStr = `<b>MemInfo:</b> <i>${memInfo.percent}%</i> (free: <i>${humanFileSize(memInfo.free)}</i> from: <i>${humanFileSize(memInfo.total)}</i>)\n`
-    const cpuInfoStr = `<b>CPUInfo:</b> <i>${cpuInfo.total}%</i>\n`
+    const cpuInfoStr = `<b>CPUInfo:</b> <i>${cpuInfo.total}%</i> (user: <i>${cpuInfo.user}%</i> system: <i>${cpuInfo.system}%</i> idle: <i>${cpuInfo.idle}%</i>)\n`
     ctx.replyWithHTML(cpuInfoStr + memInfoStr + sensorsStr)
 })
 
