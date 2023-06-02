@@ -1,10 +1,8 @@
 import { exec } from "child_process"
 import { Scenes } from "telegraf"
-import logger from "../../util/logger"
 import axios from "axios"
 import { delay } from "../../util/async"
-import { kill, pid } from "process"
-import { bold, fmt } from "telegraf/format"
+import { kill } from "process"
 import { humanFileSize } from "../../util/formating"
 
 interface CPUInfo {
@@ -21,16 +19,19 @@ interface MemInfo {
 const systemInfoScene = new Scenes.BaseScene<Scenes.SceneContext>("systeminfo")
 systemInfoScene.enter(async ctx => {
     ctx.reply("Start fetching....")
-    const p = exec('glances -t=1 --quiet -w --disable-webui >/dev/null')
+    const p = exec("glances -t=1 --quiet -w --disable-webui >/dev/null")
     let cpuInfo: CPUInfo
     let memInfo: MemInfo
+    let sensorsInfo: MemInfo
     while (!cpuInfo) {
         await delay(1000)
         try {
-            let response = await axios.get('http://127.0.0.1:61208/api/3/cpu')
+            let response = await axios.get("http://127.0.0.1:61208/api/3/cpu")
             cpuInfo = response.data as CPUInfo
-            response = await axios.get('http://127.0.0.1:61208/api/3/mem')
+            response = await axios.get("http://127.0.0.1:61208/api/3/mem")
             memInfo = response.data as MemInfo
+            response = await axios.get("http://127.0.0.1:61208/api/3/sensors")
+            sensorsInfo = response.data
         } catch (e) {
 
         }
@@ -40,11 +41,18 @@ systemInfoScene.enter(async ctx => {
         p.kill()
         kill(p.pid + 1)
     } catch (e) { }
-    ctx.reply(
-        fmt`${bold`MemInfo:`} ${memInfo.percent}% (free: ${humanFileSize(memInfo.free)} from ${humanFileSize(memInfo.total)})
-${bold`CPUInfo:`} ${cpuInfo.total}%
-`)
 
+    let sensorsStr = ""
+    if (Object.entries(sensorsInfo).length > 0) {
+        sensorsStr = "<b>Sensors:</b>\n"
+        Object.entries(sensorsInfo).forEach(([key, value], index) => {
+            sensorsStr.concat(`${key}:<i>value</i>\n`)
+        })
+    }
+
+    const memInfoStr = `<b>MemInfo:</b> <i>${memInfo.percent}%</i> (free: <i>${humanFileSize(memInfo.free)}</i> from: <i>${humanFileSize(memInfo.total)}</i>)\n`
+    const cpuInfoStr = `<b>CPUInfo:</b> <i>${cpuInfo.total}%</i>\n`
+    ctx.replyWithHTML(cpuInfoStr+memInfoStr+sensorsStr)
 })
 
 export default systemInfoScene
