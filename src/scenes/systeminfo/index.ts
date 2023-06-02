@@ -31,6 +31,7 @@ systemInfoScene.enter(async ctx => {
     let cpuInfo: CPUInfo
     let memInfo: MemInfo
     let sensorsInfos: Array<SensorsInfo> = []
+    await delay(2000) // Delay to give time to calm down after the launch
     while (!cpuInfo) {
         await delay(1000)
         try {
