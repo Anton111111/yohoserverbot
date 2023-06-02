@@ -1,15 +1,19 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
-  extends: 'standard-with-typescript',
-  overrides: [
-  ],
+  extends: ["airbnb-base", 'airbnb-typescript/base'],
+  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: './tsconfig.json',
   },
   rules: {
-  }
+    semi: ['error', 'never'],
+    '@typescript-eslint/semi': 'off',
+    'comma-dangle': 'off',
+    '@typescript-eslint/comma-dangle': 'off'
+  },
 }
