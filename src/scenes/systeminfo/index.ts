@@ -51,8 +51,8 @@ systemInfoScene.enter(async ctx => {
     let sensorsStr = ""
     if (sensorsInfos.length > 0) {
         sensorsStr = "<b>Sensors:</b>\n"
-        sensorsInfos.forEach((sensorsInfo) => {
-            sensorsStr.concat(`${sensorsInfo.label}:<i>${sensorsInfo.value} ${sensorsInfo.unit}</i>\n`)
+        sensorsInfos.forEach((sensorInfo) => {
+            sensorsStr = sensorsStr.concat(`${sensorInfo.label}: <i>${sensorInfo.value} ${sensorInfo.unit}</i>\n`)
         })
     }
 
