@@ -1,6 +1,7 @@
 import { Markup, Scenes } from 'telegraf'
 import { TorrentsListFilter, getListOfTorrents } from '../../util/qbittorent'
 import suspend from '../../util/system'
+import getTorrserverTorrents, { TorrserverTorrentStatus } from '../../util/torrserver'
 
 const goToSuspend = (ctx: Scenes.SceneContext) => {
   ctx.reply('Trying to fall asleep...')
@@ -14,11 +15,28 @@ const suspendScene = new Scenes.BaseScene<Scenes.SceneContext>('suspend')
 suspendScene.enter(async (ctx) => {
   const dTorrents = await getListOfTorrents(TorrentsListFilter.Downloading)
   const pTorrents = await getListOfTorrents(TorrentsListFilter.Paused)
-  if ((dTorrents.length - pTorrents.length) > 0) {
-    ctx.reply('Hey, you have active torrents! Are you sure that you want sleep?', Markup.inlineKeyboard([
-      Markup.button.callback('Yes', 'Yes'),
-      Markup.button.callback('No', 'No'),
-    ]))
+  if (dTorrents.length - pTorrents.length > 0) {
+    ctx.reply(
+      'Hey, you have active torrents! Are you sure that you want sleep?',
+      Markup.inlineKeyboard([
+        Markup.button.callback('Yes', 'Yes'),
+        Markup.button.callback('No', 'No'),
+      ])
+    )
+    return
+  }
+
+  const torrents = (await getTorrserverTorrents()).filter(
+    (torrent) => torrent.stat !== TorrserverTorrentStatus.IN_DB
+  )
+  if (torrents.length > 0) {
+    ctx.reply(
+      'Hey, looks like someone watch torrent by Torrserver! Are you sure that you want sleep?',
+      Markup.inlineKeyboard([
+        Markup.button.callback('Yes', 'Yes'),
+        Markup.button.callback('No', 'No'),
+      ])
+    )
     return
   }
   goToSuspend(ctx)

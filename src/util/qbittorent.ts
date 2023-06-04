@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-interface Torrent {
+interface QTorrent {
   hash: string
   name: string
   progress: number
@@ -15,11 +15,15 @@ export enum TorrentsListFilter {
 
 export async function getListOfTorrents(
   filter: TorrentsListFilter = TorrentsListFilter.NONE
-): Promise<Array<Torrent>> {
-  const torrents: Array<Torrent> = []
+): Promise<Array<QTorrent>> {
+  const torrents: Array<QTorrent> = []
   try {
-    const response = await axios.get<Array<Torrent>>(`${process.env.QBTORRENT_URL}/api/v2/torrents/info?filter=${filter}`)
+    const response = await axios.get<Array<QTorrent>>(
+      `${process.env.QBTORRENT_URL}/api/v2/torrents/info?filter=${filter}`
+    )
     torrents.push(...response.data)
-  } catch (e) { /* empty */ }
+  } catch (e) {
+    /* empty */
+  }
   return torrents
 }
