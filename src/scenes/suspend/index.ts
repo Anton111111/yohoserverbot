@@ -2,6 +2,7 @@ import { Markup, Scenes } from 'telegraf'
 import { TorrentsListFilter, getListOfTorrents } from '../../util/qbittorent'
 import suspend from '../../util/system'
 import getTorrserverTorrents, { TorrserverTorrentStatus } from '../../util/torrserver'
+import getPlexSessionStatuses from '../../util/plex'
 
 const goToSuspend = (ctx: Scenes.SceneContext) => {
   ctx.reply('Trying to fall asleep...')
@@ -39,6 +40,19 @@ suspendScene.enter(async (ctx) => {
     )
     return
   }
+
+  const plexStatus = await getPlexSessionStatuses()
+  if (plexStatus.size > 0) {
+    ctx.reply(
+      'Hey, looks like someone watch Plex! Are you sure that you want sleep?',
+      Markup.inlineKeyboard([
+        Markup.button.callback('Yes', 'Yes'),
+        Markup.button.callback('No', 'No'),
+      ])
+    )
+    return
+  }
+
   goToSuspend(ctx)
 })
 
