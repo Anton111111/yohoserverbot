@@ -11,6 +11,13 @@ interface MediaContainer {
 
 interface Metadata {
   title: string
+  grandparentTitle?: string
+  type: string
+  Player?: PlexPlayer
+}
+
+interface PlexPlayer {
+  address: string
 }
 
 export default async function getPlexSessionStatuses(): Promise<MediaContainer> {
