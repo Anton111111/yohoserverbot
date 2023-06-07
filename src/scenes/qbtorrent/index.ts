@@ -1,6 +1,7 @@
 import { Scenes } from 'telegraf'
-import { getListOfTorrents } from '../../util/qbittorent'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment'
+import { getListOfTorrents } from '../../util/qbittorent'
 
 const torrentsScene = new Scenes.BaseScene<Scenes.SceneContext>('torrents')
 torrentsScene.enter(async (ctx) => {
