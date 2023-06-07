@@ -14,7 +14,7 @@ torrentsScene.enter(async (ctx) => {
         ` - ${torrent.name} (state: ${torrent.state}  progress: ${torrent.progress.toFixed(2)}%`
       )
       if (torrent.state === 'downloading') {
-        const etaDuration = moment.duration(torrent.eta).humanize()
+        const etaDuration = moment.duration(torrent.eta*1000).humanize()
         replyStr = replyStr.concat(` eta: ${etaDuration}`)
       }
       replyStr = replyStr.concat(')\n')
