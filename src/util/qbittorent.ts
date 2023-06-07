@@ -5,6 +5,7 @@ interface QTorrent {
   name: string
   progress: number
   state: string
+  eta: number
 }
 
 export enum TorrentsListFilter {

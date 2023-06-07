@@ -7,6 +7,7 @@ import suspendScene from './scenes/suspend'
 import systemInfoScene from './scenes/systeminfo'
 import torrserverScene from './scenes/torrserver'
 import plexScene from './scenes/plex'
+import torrentsScene from './scenes/qbtorrent'
 
 require('dotenv').config()
 
@@ -20,6 +21,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
   systemInfoScene,
   suspendScene,
   torrserverScene,
+  torrentsScene,
   plexScene
 ])
 bot.use(stage.middleware())
@@ -28,6 +30,7 @@ bot.command('help', (ctx) => ctx.scene.enter('help'))
 bot.command('systeminfo', (ctx) => ctx.scene.enter('systeminfo'))
 bot.command('torrserver', (ctx) => ctx.scene.enter('torrserver'))
 bot.command('plex', (ctx) => ctx.scene.enter('plex'))
+bot.command('torrents', (ctx) => ctx.scene.enter('torrents'))
 bot.command('sleep', (ctx) => ctx.scene.enter('suspend'))
 
 bot.catch((error: any) => {
@@ -38,6 +41,7 @@ bot.telegram.setMyCommands([
   { command: 'help', description: 'Read this help' },
   { command: 'systeminfo', description: 'View short system info' },
   { command: 'torrserver', description: 'View active torrents on Torrserver' },
+  { command: 'torrents', description: 'View list of torrents' },
   { command: 'plex', description: 'View active sessions on Plex' },
   { command: 'sleep', description: 'Go to sleep' },
 ])

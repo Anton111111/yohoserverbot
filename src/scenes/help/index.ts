@@ -7,6 +7,7 @@ helpScene.enter((ctx) => ctx.reply(
 Use /help to see this help.
 Use /systeminfo to get short system info.
 Use /torrserver to view active torrents on Torrserver.
+Use /torrents to view list of torrents.
 Use /plex to view active sessions on Plex.
 `,
 ))
