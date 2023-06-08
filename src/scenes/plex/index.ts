@@ -6,7 +6,7 @@ plexScene.enter(async (ctx) => {
   const plexStatus = await getPlexSessionStatuses()
 
   if (plexStatus.size > 0) {
-    let replyStr = 'Looks like someone watch Plex:\n'
+    let replyStr = 'Looks like someone watch Plex:\n\n'
     plexStatus.Metadata.forEach((metadata) => {
       let metadataStr = metadata.grandparentTitle
         ? `<b>${metadata.grandparentTitle} (${metadata.title})</b>`

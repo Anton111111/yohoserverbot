@@ -8,7 +8,7 @@ torrentsScene.enter(async (ctx) => {
   const torrents = await getListOfTorrents()
 
   if (torrents.length > 0) {
-    let replyStr = 'Yo, Ho! Here is list of torrents:\n'
+    let replyStr = 'Yo, Ho! Here is list of torrents:\n\n'
     torrents.forEach((torrent) => {
       replyStr = replyStr.concat(`<b>${torrent.name}</b> (state: <i>${torrent.state}</i>`)
 
