@@ -4,11 +4,13 @@
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && node ./dist/bot.js",
+    "torrent:finish": "node ./dist/torrent.js --action=finish",
     "build": "tsc",
     "ts:watch": "tsc -w"
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "command-line-args": "^5.2.1",
     "dotenv": "^16.0.3",
     "level": "^8.0.0",
     "moment": "^2.29.4",
@@ -16,6 +18,7 @@
     "winston": "^3.9.0"
   },
   "devDependencies": {
+    "@types/command-line-args": "^5.2.0",
     "@types/node": "^20.2.5",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",

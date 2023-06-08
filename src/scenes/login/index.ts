@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf'
 import { message } from 'telegraf/filters'
-import db from '../../db'
+import db, { getKey } from '../../db'
 import { loggerWithCtx } from '../../util/logger'
 
 const { leave } = Scenes.Stage
@@ -11,13 +11,11 @@ loginScene.command('back', leave<Scenes.SceneContext>())
 loginScene.on(message('text'), (ctx) => {
   if (ctx.message.text === process.env.PASSWORD) {
     try {
-      db.put(
-        ctx.from.id,
-        {
-          id: ctx.from.id,
-          username: ctx.from.username,
-        },
-      )
+      db.put(getKey(ctx.chat.id, ctx.from.id), {
+        id: ctx.from.id,
+        username: ctx.from.username,
+        chatId: ctx.chat.id,
+      })
       ctx.reply('I remember you!')
       ctx.scene.enter('help')
     } catch (e) {
