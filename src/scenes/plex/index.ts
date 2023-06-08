@@ -9,12 +9,12 @@ plexScene.enter(async (ctx) => {
     let replyStr = 'Looks like someone watch Plex:\n'
     plexStatus.Metadata.forEach((metadata) => {
       let metadataStr = metadata.grandparentTitle
-        ? `<i>- ${metadata.grandparentTitle} (${metadata.title})</i>`
-        : `<i>- ${metadata.title}</i>`
+        ? `<b>${metadata.grandparentTitle} (${metadata.title})</b>`
+        : `<b>${metadata.title}</b>`
       if (metadata.Player && metadata.Player.address) {
         metadataStr = metadataStr.concat(` from ${metadata.Player?.address}`)
       }
-      replyStr = replyStr.concat(metadataStr.concat('\n'))
+      replyStr = rplyStr.concat(metadataStr.concat('\n\n'))
     })
     ctx.replyWithHTML(replyStr)
   } else {

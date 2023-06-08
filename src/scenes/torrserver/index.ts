@@ -10,7 +10,7 @@ torrserverScene.enter(async (ctx) => {
   if (torrents.length > 0) {
     let torrentsStr = 'Looks like someone watch torrents:\n'
     torrents.forEach((torrent) => {
-      torrentsStr = torrentsStr.concat(`<i>- ${torrent.title}</i>\n`)
+      torrentsStr = torrentsStr.concat(`<b>${torrent.title}</b>\n\n`)
     })
     ctx.replyWithHTML(torrentsStr)
   } else {

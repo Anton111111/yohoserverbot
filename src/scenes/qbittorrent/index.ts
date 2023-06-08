@@ -10,15 +10,15 @@ torrentsScene.enter(async (ctx) => {
   if (torrents.length > 0) {
     let replyStr = 'Yo, Ho! Here is list of torrents:\n'
     torrents.forEach((torrent) => {
-      replyStr = replyStr.concat(` - ${torrent.name} (state: ${torrent.state}`)
+      replyStr = replyStr.concat(`<b>${torrent.name}</b> (state: <i>${torrent.state}</i>`)
 
       if (torrent.state === 'downloading') {
         const etaDuration = moment.duration(torrent.eta * 1000).humanize()
-        replyStr = replyStr.concat(` progress: ${(torrent.progress * 100).toFixed(2)}%`)
-        replyStr = replyStr.concat(` eta: ${etaDuration}`)
+        replyStr = replyStr.concat(` progress: <i>${(torrent.progress * 100).toFixed(2)}%</i>`)
+        replyStr = replyStr.concat(` eta: <i>${etaDuration}</i>`)
       }
 
-      replyStr = replyStr.concat(')\n')
+      replyStr = replyStr.concat(')\n\n')
     })
     ctx.replyWithHTML(replyStr)
   } else {
