@@ -14,7 +14,7 @@ plexScene.enter(async (ctx) => {
       if (metadata.Player && metadata.Player.address) {
         metadataStr = metadataStr.concat(` from ${metadata.Player?.address}`)
       }
-      replyStr = rplyStr.concat(metadataStr.concat('\n\n'))
+      replyStr = replyStr.concat(metadataStr.concat('\n\n'))
     })
     ctx.replyWithHTML(replyStr)
   } else {
