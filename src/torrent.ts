@@ -14,6 +14,7 @@ const options = commandLineArgs(optionDefinitions)
 
 async function onFinishTorrent() {
   const telegraf = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
+  await db.open()
   const iterator = db.iterator()
   let next = await iterator.next()
   while (next !== undefined) {
