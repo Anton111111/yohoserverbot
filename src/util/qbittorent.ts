@@ -20,7 +20,7 @@ export async function getListOfTorrents(
   const torrents: Array<QTorrent> = []
   try {
     const response = await axios.get<Array<QTorrent>>(
-      `${process.env.QBTORRENT_URL}/api/v2/torrents/info?filter=${filter}`
+      `${process.env.QBITTORRENT_URL}/api/v2/torrents/info?filter=${filter}`
     )
     torrents.push(...response.data)
   } catch (e) {

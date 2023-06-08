@@ -7,7 +7,7 @@ import suspendScene from './scenes/suspend'
 import systemInfoScene from './scenes/systeminfo'
 import torrserverScene from './scenes/torrserver'
 import plexScene from './scenes/plex'
-import torrentsScene from './scenes/qbtorrent'
+import torrentsScene from './scenes/qbittorrent'
 
 require('dotenv').config()
 

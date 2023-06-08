@@ -1,7 +1,7 @@
 import commandLineArgs from 'command-line-args'
 import { Telegraf } from 'telegraf'
 import logger from './util/logger'
-import db, { readSnapshot } from './db'
+import { readSnapshot } from './db'
 
 require('dotenv').config()
 
