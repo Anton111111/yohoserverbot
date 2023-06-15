@@ -8,11 +8,11 @@ interface Torrent {
 
 export enum TorrserverTorrentStatus {
   ADDED = 0,
-	GETTING_INFO = 1,
-	PRELOAD = 2,
-	WORKING = 3,
-	CLOSED = 4,
-	IN_DB = 5
+  GETTING_INFO = 1,
+  PRELOAD = 2,
+  WORKING = 3,
+  CLOSED = 4,
+  IN_DB = 5
 }
 
 export default async function getTorrserverTorrents(): Promise<Array<Torrent>> {
@@ -36,4 +36,21 @@ export default async function getTorrserverTorrents(): Promise<Array<Torrent>> {
     /* empty */
   }
   return torrents
+}
+
+export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string> {
+  let report: string | null = null
+  const torrents = (await getTorrserverTorrents()).filter(
+    (torrent) => torrent.stat !== TorrserverTorrentStatus.IN_DB
+  )
+
+  if (torrents.length > 0) {
+    report = 'Looks like someone watch torrents:\n\n'
+    torrents.forEach((torrent) => {
+      report = report.concat(`<b>${torrent.title}</b>\n\n`)
+    })
+  } else if (!nullOnIdle) {
+    report = 'I think Torrserver is idle...'
+  }
+  return report
 }

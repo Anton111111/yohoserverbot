@@ -41,3 +41,24 @@ export default async function getPlexSessionStatuses(): Promise<MediaContainer> 
   }
   return mediaContainer
 }
+
+export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string | null> {
+  let report: string | null = null
+  const plexStatus = await getPlexSessionStatuses()
+
+  if (plexStatus.size > 0) {
+    report = 'Looks like someone watch Plex:\n\n'
+    plexStatus.Metadata.forEach((metadata) => {
+      let metadataStr = metadata.grandparentTitle
+        ? `<b>${metadata.grandparentTitle} (${metadata.title})</b>`
+        : `<b>${metadata.title}</b>`
+      if (metadata.Player && metadata.Player.address) {
+        metadataStr = metadataStr.concat(` from ${metadata.Player?.address}`)
+      }
+      report = report.concat(metadataStr.concat('\n\n'))
+    })
+  } else if (!nullOnIdle) {
+    report = 'I think Plex is idle...'
+  }
+  return report
+}
