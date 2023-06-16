@@ -3,9 +3,11 @@
   "author": "Anton Potekhin (https://github.com/Anton111111)",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && node ./dist/bot.js",
+    "prestart": "npm run preinstall",
+    "start": "node ./dist/bot.js",
+    "install": "sudo systemctl restart yohoserverbot.service",
+    "preinstall": "tsc",
     "torrent:finish": "node ./dist/torrent.js --action=finish",
-    "build": "tsc",
     "ts:watch": "tsc -w"
   },
   "dependencies": {
