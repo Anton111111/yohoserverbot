@@ -30,9 +30,9 @@ export async function getListOfTorrents(
   return torrents
 }
 
-export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string | null> {
+export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {
   const torrents = await getListOfTorrents()
-  let report: string | null = null
+  let report = ''
   if (torrents.length > 0) {
     report = 'Yo, Ho! Here is list of torrents:\n\n'
     torrents.forEach((torrent) => {
@@ -46,7 +46,7 @@ export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string
 
       report = report.concat(')\n\n')
     })
-  } else if (!nullOnIdle) {
+  } else if (returnIdleMessage) {
     report = "Don't see any torrents in list..."
   }
 

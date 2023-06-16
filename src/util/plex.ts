@@ -42,8 +42,8 @@ export default async function getPlexSessionStatuses(): Promise<MediaContainer> 
   return mediaContainer
 }
 
-export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string | null> {
-  let report: string | null = null
+export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {
+  let report = ''
   const plexStatus = await getPlexSessionStatuses()
 
   if (plexStatus.size > 0) {
@@ -57,7 +57,7 @@ export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string
       }
       report = report.concat(metadataStr.concat('\n\n'))
     })
-  } else if (!nullOnIdle) {
+  } else if (returnIdleMessage) {
     report = 'I think Plex is idle...'
   }
   return report

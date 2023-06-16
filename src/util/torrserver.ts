@@ -38,8 +38,8 @@ export default async function getTorrserverTorrents(): Promise<Array<Torrent>> {
   return torrents
 }
 
-export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string> {
-  let report: string | null = null
+export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {
+  let report = ''
   const torrents = (await getTorrserverTorrents()).filter(
     (torrent) => torrent.stat !== TorrserverTorrentStatus.IN_DB
   )
@@ -49,7 +49,7 @@ export async function getHTMLReport(nullOnIdle: boolean = false): Promise<string
     torrents.forEach((torrent) => {
       report = report.concat(`<b>${torrent.title}</b>\n\n`)
     })
-  } else if (!nullOnIdle) {
+  } else if (returnIdleMessage) {
     report = 'I think Torrserver is idle...'
   }
   return report
