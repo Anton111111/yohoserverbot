@@ -6,11 +6,11 @@ import { getHTMLReport as torrserverHtmlReport } from '../../util/torrserver'
 const summaryScene = new Scenes.BaseScene<Scenes.SceneContext>('summary')
 summaryScene.enter(async (ctx) => {
   let fullReport: string = ''
-  const reports = [qbittorentHtmlReport(true), plexHtmlReport(true), torrserverHtmlReport(true)]
+  const reports = [qbittorentHtmlReport(false), plexHtmlReport(false), torrserverHtmlReport(false)]
   Promise.all(reports).then(_reports => {
     _reports.forEach(singleReport => {
       if (singleReport) {
-        fullReport += `${singleReport}\n\n`
+        fullReport += `${singleReport}\n`
       }
     })
     if (fullReport) {
