@@ -27,6 +27,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
   plexScene,
   plexRestartScene
 ])
+
 bot.use(stage.middleware())
 bot.use(auth)
 bot.command('help', (ctx) => ctx.scene.enter('help'))

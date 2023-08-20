@@ -7,7 +7,7 @@ plexScene.enter(async (ctx) => {
 })
 
 export const plexRestartScene = new Scenes.BaseScene<Scenes.SceneContext>('plexrestart')
-plexScene.enter(async (ctx) => {
+plexRestartScene.enter(async (ctx) => {
   ctx.reply('Trying to restart Plex...')
   setTimeout(() => {
     restart()
