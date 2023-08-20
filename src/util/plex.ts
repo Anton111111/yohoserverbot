@@ -65,6 +65,6 @@ export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<
 }
 
 export function restart() {
-  exec('systemctl restart')
+  exec('systemctl restart plexmediaserver.service')
 }
 
