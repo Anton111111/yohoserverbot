@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { exec } from 'child_process'
 
 interface PlexSessionsStatusResponse {
   MediaContainer: MediaContainer
@@ -62,3 +63,8 @@ export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<
   }
   return report
 }
+
+export function restart() {
+  exec('systemctl restart')
+}
+

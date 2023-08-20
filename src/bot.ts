@@ -6,7 +6,7 @@ import helpScene from './scenes/help'
 import suspendScene from './scenes/suspend'
 import systemInfoScene from './scenes/systeminfo'
 import torrserverScene from './scenes/torrserver'
-import plexScene from './scenes/plex'
+import plexScene, { plexRestartScene } from './scenes/plex'
 import torrentsScene from './scenes/qbittorrent'
 import summaryScene from './scenes/summary'
 
@@ -24,7 +24,8 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
   suspendScene,
   torrserverScene,
   torrentsScene,
-  plexScene
+  plexScene,
+  plexRestartScene
 ])
 bot.use(stage.middleware())
 bot.use(auth)
@@ -33,6 +34,7 @@ bot.command('summary', (ctx) => ctx.scene.enter('summary'))
 bot.command('systeminfo', (ctx) => ctx.scene.enter('systeminfo'))
 bot.command('torrserver', (ctx) => ctx.scene.enter('torrserver'))
 bot.command('plex', (ctx) => ctx.scene.enter('plex'))
+bot.command('plexrestart', (ctx) => ctx.scene.enter('plexrestart'))
 bot.command('torrents', (ctx) => ctx.scene.enter('torrents'))
 bot.command('sleep', (ctx) => ctx.scene.enter('suspend'))
 
@@ -47,6 +49,7 @@ bot.telegram.setMyCommands([
   { command: 'torrserver', description: 'View active torrents on Torrserver' },
   { command: 'torrents', description: 'View list of torrents' },
   { command: 'plex', description: 'View active sessions on Plex' },
+  { command: 'plexrestart', description: 'Restart Plex service' },
   { command: 'sleep', description: 'Go to sleep' },
 ])
 
