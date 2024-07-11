@@ -1,24 +1,24 @@
 import { Markup, Scenes } from 'telegraf'
 import { TorrentsListFilter, getListOfTorrents } from '../../util/qbittorent'
-import suspend from '../../util/system'
+import  { shutdown } from '../../util/system'
 import getTorrserverTorrents, { TorrserverTorrentStatus } from '../../util/torrserver'
 import getPlexSessionStatuses from '../../util/plex'
 
-const goToSuspend = (ctx: Scenes.SceneContext) => {
-  ctx.reply('Trying to fall asleep...')
+const goToShutdown = (ctx: Scenes.SceneContext) => {
+  ctx.reply('Trying to shutdown...')
   setTimeout(() => {
-    suspend()
+    shutdown()
   }, 1000)
   ctx.scene.leave()
 }
 
-const suspendScene = new Scenes.BaseScene<Scenes.SceneContext>('suspend')
-suspendScene.enter(async (ctx) => {
+const shutdownScene = new Scenes.BaseScene<Scenes.SceneContext>('shutdown')
+shutdownScene.enter(async (ctx) => {
   const dTorrents = await getListOfTorrents(TorrentsListFilter.Downloading)
   const pTorrents = await getListOfTorrents(TorrentsListFilter.Paused)
   if (dTorrents.length - pTorrents.length > 0) {
     ctx.reply(
-      'Hey, you have active torrents! Are you sure that you want sleep?',
+      'Hey, you have active torrents! Are you sure that you want shutdown?',
       Markup.inlineKeyboard([
         Markup.button.callback('Yes', 'Yes'),
         Markup.button.callback('No', 'No'),
@@ -32,7 +32,7 @@ suspendScene.enter(async (ctx) => {
   )
   if (torrents.length > 0) {
     ctx.reply(
-      'Hey, looks like someone watch torrent by Torrserver! Are you sure that you want sleep?',
+      'Hey, looks like someone watch torrent by Torrserver! Are you sure that you want shutdown?',
       Markup.inlineKeyboard([
         Markup.button.callback('Yes', 'Yes'),
         Markup.button.callback('No', 'No'),
@@ -44,7 +44,7 @@ suspendScene.enter(async (ctx) => {
   const plexStatus = await getPlexSessionStatuses()
   if (plexStatus.size > 0) {
     ctx.reply(
-      'Hey, looks like someone watch Plex! Are you sure that you want sleep?',
+      'Hey, looks like someone watch Plex! Are you sure that you want shutdown?',
       Markup.inlineKeyboard([
         Markup.button.callback('Yes', 'Yes'),
         Markup.button.callback('No', 'No'),
@@ -53,14 +53,14 @@ suspendScene.enter(async (ctx) => {
     return
   }
 
-  goToSuspend(ctx)
+  goToShutdown(ctx)
 })
 
-suspendScene.action('Yes', goToSuspend)
+shutdownScene.action('Yes', goToShutdown)
 
-suspendScene.action('No', (ctx) => {
+shutdownScene.action('No', (ctx) => {
   ctx.reply('Right choice!')
   ctx.scene.leave()
 })
 
-export default suspendScene
+export default shutdownScene

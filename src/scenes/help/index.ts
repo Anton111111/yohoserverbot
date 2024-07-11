@@ -11,6 +11,8 @@ Use /torrserver to view active torrents on Torrserver.
 Use /torrents to view list of torrents.
 Use /plex to view active sessions on Plex.
 Use /plexrestart to restart Plex service.
+Use /suspend Go to sleep.
+Use /shutdown to shutdown YoHoServer.
 `,
 ))
 

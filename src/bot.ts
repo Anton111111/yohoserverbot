@@ -4,6 +4,7 @@ import logger from './util/logger'
 import loginScene from './scenes/login'
 import helpScene from './scenes/help'
 import suspendScene from './scenes/suspend'
+import shutdownScene from './scenes/shutdown'
 import systemInfoScene from './scenes/systeminfo'
 import torrserverScene from './scenes/torrserver'
 import plexScene, { plexRestartScene } from './scenes/plex'
@@ -22,6 +23,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
   summaryScene,
   systemInfoScene,
   suspendScene,
+  shutdownScene,
   torrserverScene,
   torrentsScene,
   plexScene,
@@ -38,6 +40,7 @@ bot.command('plex', (ctx) => ctx.scene.enter('plex'))
 bot.command('plexrestart', (ctx) => ctx.scene.enter('plexrestart'))
 bot.command('torrents', (ctx) => ctx.scene.enter('torrents'))
 bot.command('sleep', (ctx) => ctx.scene.enter('suspend'))
+bot.command('shutdown', (ctx) => ctx.scene.enter('shutdown'))
 
 bot.catch((error: any) => {
   logger.error('Global error has happened, %O', error)
@@ -52,6 +55,7 @@ bot.telegram.setMyCommands([
   { command: 'plex', description: 'View active sessions on Plex' },
   { command: 'plexrestart', description: 'Restart Plex service' },
   { command: 'sleep', description: 'Go to sleep' },
+  { command: 'shutdown', description: 'Shutdown' },
 ])
 
 bot.launch()
