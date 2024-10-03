@@ -4,6 +4,7 @@ import axios from 'axios'
 import { kill } from 'process'
 import delay from '../../util/async'
 import humanFileSize from '../../util/formating'
+import logger from '../../util/logger'
 
 interface CPUInfo {
   total: number
@@ -42,16 +43,16 @@ systemInfoScene.enter(async (ctx) => {
     await delay(1000)
     try {
       // eslint-disable-next-line no-await-in-loop
-      let response = await axios.get('http://127.0.0.1:61208/api/3/cpu')
+      let response = await axios.get('http://127.0.0.1:61208/api/4/cpu')
       cpuInfo = response.data as CPUInfo
       // eslint-disable-next-line no-await-in-loop
-      response = await axios.get('http://127.0.0.1:61208/api/3/mem')
+      response = await axios.get('http://127.0.0.1:61208/api/4/mem')
       memInfo = response.data as MemInfo
       // eslint-disable-next-line no-await-in-loop
-      response = await axios.get('http://127.0.0.1:61208/api/3/sensors')
+      response = await axios.get('http://127.0.0.1:61208/api/4/sensors')
       sensorsInfos = response.data as Array<SensorsInfo>
-      attempt += 1
-    } catch (e) { /* empty */ }
+    } catch (e) { logger.error('Error: ' + e) }
+    finally { attempt += 1 }
   }
   // Dirty trick +1 because exec return shell script that start glances
   try {
