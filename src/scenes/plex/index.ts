@@ -18,7 +18,7 @@ plexRestartScene.enter(async (ctx) => {
 export const plexRefreshAllScene = new Scenes.BaseScene<Scenes.SceneContext>('plexrefreshall')
 plexRefreshAllScene.enter(async (ctx) => {
   ctx.reply('Start refreshing for all Plex libraries...')
-  const result = await refreshAllPlexLibraries()
+  await refreshAllPlexLibraries()
   ctx.scene.leave()
 })
 

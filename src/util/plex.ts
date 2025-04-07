@@ -44,10 +44,6 @@ export default async function getPlexSessionStatuses(): Promise<MediaContainer> 
 }
 
 export async function refreshAllPlexLibraries(): Promise<boolean> {
-  let mediaContainer: MediaContainer = {
-    size: 0,
-    Metadata: [],
-  }
   try {
     const response = await axios.get<PlexSessionsStatusResponse>(
       `${process.env.PLEX_URL}/library/sections/all/refresh`,
