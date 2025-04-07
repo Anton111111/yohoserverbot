@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf'
-import { getHTMLReport, restart } from '../../util/plex'
+import { getHTMLReport, restart, refreshAllPlexLibraries } from '../../util/plex'
 
 const plexScene = new Scenes.BaseScene<Scenes.SceneContext>('plex')
 plexScene.enter(async (ctx) => {
@@ -12,6 +12,13 @@ plexRestartScene.enter(async (ctx) => {
   setTimeout(() => {
     restart()
   }, 1000)
+  ctx.scene.leave()
+})
+
+export const plexRefreshAllScene = new Scenes.BaseScene<Scenes.SceneContext>('plexrefreshall')
+plexRefreshAllScene.enter(async (ctx) => {
+  ctx.reply('Start refreshing for all Plex libraries...')
+  const result = await refreshAllPlexLibraries()
   ctx.scene.leave()
 })
 

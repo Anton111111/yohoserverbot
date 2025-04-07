@@ -43,6 +43,27 @@ export default async function getPlexSessionStatuses(): Promise<MediaContainer> 
   return mediaContainer
 }
 
+export async function refreshAllPlexLibraries(): Promise<boolean> {
+  let mediaContainer: MediaContainer = {
+    size: 0,
+    Metadata: [],
+  }
+  try {
+    const response = await axios.get<PlexSessionsStatusResponse>(
+      `${process.env.PLEX_URL}/library/sections/all/refresh`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Plex-Token': process.env.PLEX_TOKEN,
+        },
+      }
+    )
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
 export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {
   let report = ''
   const plexStatus = await getPlexSessionStatuses()
@@ -67,4 +88,6 @@ export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<
 export function restart() {
   exec('systemctl restart plexmediaserver.service')
 }
+
+
 

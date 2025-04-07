@@ -37,6 +37,7 @@ bot.command('summary', (ctx) => ctx.scene.enter('summary'))
 bot.command('systeminfo', (ctx) => ctx.scene.enter('systeminfo'))
 bot.command('torrserver', (ctx) => ctx.scene.enter('torrserver'))
 bot.command('plex', (ctx) => ctx.scene.enter('plex'))
+bot.command('plexrefreshall', (ctx) => ctx.scene.enter('plexrefreshall'))
 bot.command('plexrestart', (ctx) => ctx.scene.enter('plexrestart'))
 bot.command('torrents', (ctx) => ctx.scene.enter('torrents'))
 bot.command('sleep', (ctx) => ctx.scene.enter('suspend'))
@@ -53,6 +54,7 @@ bot.telegram.setMyCommands([
   { command: 'torrserver', description: 'View active torrents on Torrserver' },
   { command: 'torrents', description: 'View list of torrents' },
   { command: 'plex', description: 'View active sessions on Plex' },
+  { command: 'plexrerefreshall', description: 'Refresh all Plex libraries' },
   { command: 'plexrestart', description: 'Restart Plex service' },
   { command: 'sleep', description: 'Go to sleep' },
   { command: 'shutdown', description: 'Shutdown' },
