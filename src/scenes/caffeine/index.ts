@@ -4,7 +4,7 @@ import fs from 'fs'
 const enableCaffeine = (ctx: Scenes.SceneContext) => {
   try {
     fs.writeFileSync(process.env.CAFFEINE_FILE_PATH, 'caffeine', 'utf-8');
-    ctx.reply('Enable Caffeine mode.')
+    ctx.reply('Caffeine dose taken!')
   } catch (err) {
     console.error('Can\'t enable Caffeine mode:', err);
   }
@@ -14,11 +14,10 @@ const enableCaffeine = (ctx: Scenes.SceneContext) => {
 const disableCaffeine = (ctx: Scenes.SceneContext) => {
   try {
     fs.unlinkSync(process.env.CAFFEINE_FILE_PATH);
-    ctx.reply('Enable Caffeine mode.')
+    ctx.reply('Caffeine has been removed.')
   } catch (err) {
     console.error('Can\'t disable Caffeine mode:', err);
   }
-  ctx.reply('Disable Caffeine mode.')
   ctx.scene.leave()
 }
 
@@ -49,7 +48,7 @@ caffeineScene.action('Enable_Yes', enableCaffeine)
 caffeineScene.action('Disable_Yes', disableCaffeine)
 
 caffeineScene.action('Enable_No', (ctx) => {
-  ctx.reply('I agree that caffeine is harmful to health! Right choice!')
+  ctx.reply('I agree that Сaffeine is harmful to health! Right choice!')
   ctx.scene.leave()
 })
 
