@@ -14,6 +14,7 @@ Use /plexrefreshall to refresh all Plex libraries.
 Use /plexrestart to restart Plex service.
 Use /suspend Go to sleep.
 Use /shutdown to shutdown YoHoServer.
+Use /caffeine to enable/disable Caffeine mode.
 `,
 ))
 

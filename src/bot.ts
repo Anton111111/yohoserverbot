@@ -10,6 +10,7 @@ import torrserverScene from './scenes/torrserver'
 import plexScene, { plexRestartScene, plexRefreshAllScene } from './scenes/plex'
 import torrentsScene from './scenes/qbittorrent'
 import summaryScene from './scenes/summary'
+import caffeineScene from './scenes/caffeine'
 
 require('dotenv').config()
 
@@ -28,7 +29,8 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
   torrentsScene,
   plexScene,
   plexRestartScene,
-  plexRefreshAllScene
+  plexRefreshAllScene,
+  caffeineScene
 ])
 
 bot.use(stage.middleware())
@@ -43,6 +45,7 @@ bot.command('plexrestart', (ctx) => ctx.scene.enter('plexrestart'))
 bot.command('torrents', (ctx) => ctx.scene.enter('torrents'))
 bot.command('sleep', (ctx) => ctx.scene.enter('suspend'))
 bot.command('shutdown', (ctx) => ctx.scene.enter('shutdown'))
+bot.command('caffeine', (ctx) => ctx.scene.enter('caffeine'))
 
 bot.catch((error: any) => {
   logger.error('Global error has happened, %O', error)
@@ -59,6 +62,7 @@ bot.telegram.setMyCommands([
   { command: 'plexrestart', description: 'Restart Plex service' },
   { command: 'sleep', description: 'Go to sleep' },
   { command: 'shutdown', description: 'Shutdown' },
+  { command: 'caffeine', description: 'Caffeine mode' },
 ])
 
 bot.launch()
