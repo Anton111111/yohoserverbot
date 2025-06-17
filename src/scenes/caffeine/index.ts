@@ -1,9 +1,9 @@
 import { Markup, Scenes } from 'telegraf'
-import fs from 'fs'
+import { isCaffeineModeEnabled, enableCaffeine, disableCaffeine } from '../../util/caffeine'
 
-const enableCaffeine = (ctx: Scenes.SceneContext) => {
+const doEnableCaffeine = (ctx: Scenes.SceneContext) => {
   try {
-    fs.writeFileSync(process.env.CAFFEINE_FILE_PATH, 'caffeine', 'utf-8');
+    enableCaffeine()
     ctx.reply('Caffeine dose taken!')
   } catch (err) {
     console.error('Can\'t enable Caffeine mode:', err);
@@ -11,9 +11,9 @@ const enableCaffeine = (ctx: Scenes.SceneContext) => {
   ctx.scene.leave()
 }
 
-const disableCaffeine = (ctx: Scenes.SceneContext) => {
+const doDisableCaffeine = (ctx: Scenes.SceneContext) => {
   try {
-    fs.unlinkSync(process.env.CAFFEINE_FILE_PATH);
+    disableCaffeine()
     ctx.reply('Caffeine has been removed.')
   } catch (err) {
     console.error('Can\'t disable Caffeine mode:', err);
@@ -24,7 +24,7 @@ const disableCaffeine = (ctx: Scenes.SceneContext) => {
 const caffeineScene = new Scenes.BaseScene<Scenes.SceneContext>('caffeine')
 caffeineScene.enter(async (ctx) => {
 
-  if (fs.existsSync(process.env.CAFFEINE_FILE_PATH)) {
+  if (isCaffeineModeEnabled()) {
     ctx.reply(
       'Caffeine mode enabled! Do you want to turn Caffeine mode off?',
       Markup.inlineKeyboard([
@@ -44,8 +44,8 @@ caffeineScene.enter(async (ctx) => {
   return
 })
 
-caffeineScene.action('Enable_Yes', enableCaffeine)
-caffeineScene.action('Disable_Yes', disableCaffeine)
+caffeineScene.action('Enable_Yes', doEnableCaffeine)
+caffeineScene.action('Disable_Yes', doDisableCaffeine)
 
 caffeineScene.action('Enable_No', (ctx) => {
   ctx.reply('I agree that Сaffeine is harmful to health! Right choice!')
