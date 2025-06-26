@@ -1,7 +1,11 @@
 import fs from 'fs'
 
 export function isCaffeineModeEnabled(): boolean {
-  return fs.existsSync(process.env.CAFFEINE_FILE_PATH)
+  if (fs.existsSync(process.env.CAFFEINE_FILE_PATH)) {
+    const threshold = Number(fs.readFileSync(process.env.CAFFEINE_FILE_PATH, 'utf8'))
+    return !isNaN(threshold) && threshold > 0
+  }
+  return false
 }
 
 export function enableCaffeine(threshold: number) {
