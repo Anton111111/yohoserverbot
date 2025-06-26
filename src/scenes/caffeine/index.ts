@@ -1,15 +1,13 @@
 import { Markup, Scenes } from 'telegraf'
-import { isCaffeineModeEnabled, enableCaffeine, disableCaffeine } from '../../util/caffeine'
-
-
-
+import { caffeineModeActiveMs, enableCaffeine, disableCaffeine } from '../../util/caffeine'
+import { getMsToHumanReadableDate } from '../../util/date';
 
 const caffeineScene = new Scenes.BaseScene<Scenes.SceneContext>('caffeine')
 caffeineScene.enter(async (ctx) => {
-
-  if (isCaffeineModeEnabled()) {
+  const activeMs = caffeineModeActiveMs();
+  if (activeMs > 0) {
     ctx.reply(
-      'Caffeine mode enabled! Do you want to turn Caffeine mode off?',
+      `The effect of caffeine will last for another ${getMsToHumanReadableDate(activeMs)}. Do you want to turn Caffeine mode off?`,
       Markup.inlineKeyboard([
         Markup.button.callback('Yes', 'Disable_Yes'),
         Markup.button.callback('No', 'Disable_No'),

@@ -1,11 +1,18 @@
 import fs from 'fs'
+import { getMsToHumanReadableDate } from './date';
 
-export function isCaffeineModeEnabled(): boolean {
+export function caffeineModeActiveMs(): number {
   if (fs.existsSync(process.env.CAFFEINE_FILE_PATH)) {
     const threshold = Number(fs.readFileSync(process.env.CAFFEINE_FILE_PATH, 'utf8'))
-    return !isNaN(threshold) && threshold > 0
+    const mtime = fs.statSync(process.env.CAFFEINE_FILE_PATH).mtime
+    const now = new Date()
+    if (!isNaN(threshold) && threshold > 0) {
+      mtime.setSeconds(mtime.getSeconds() + threshold);
+      const diffMs = mtime.getTime() - now.getTime()
+      return diffMs > 0 ? diffMs : 0;
+    }
   }
-  return false
+  return 0
 }
 
 export function enableCaffeine(threshold: number) {
@@ -18,5 +25,8 @@ export function disableCaffeine() {
 }
 
 export function getHTMLReport(): string {
-  return isCaffeineModeEnabled() ? 'Caffeine mode enabled' : ''
+  const ms = caffeineModeActiveMs()
+  return ms > 0 ? `Caffeine lasts for ${getMsToHumanReadableDate(ms)}` : ''
 }
+
+
