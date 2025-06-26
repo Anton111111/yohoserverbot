@@ -11,19 +11,19 @@ caffeineScene.enter(async (ctx) => {
     ctx.reply(
       'Caffeine mode enabled! Do you want to turn Caffeine mode off?',
       Markup.inlineKeyboard([
-        Markup.button.callback('Yes', 'Disable_Yes', true),
-        Markup.button.callback('No', 'Disable_No', true),
+        Markup.button.callback('Yes', 'Disable_Yes'),
+        Markup.button.callback('No', 'Disable_No'),
       ])
     )
   } else {
     ctx.reply(
       'What dose of caffeine should I take??',
       Markup.inlineKeyboard([
-        Markup.button.callback('30 min', 'Enable_Yes:30', true),
-        Markup.button.callback('1 hour', 'Enable_Yes:60', true),
-        Markup.button.callback('2 hours', 'Enable_Yes:120', true),
-        Markup.button.callback('3 hours', 'Enable_Yes:180', true),
-        Markup.button.callback('Cancel', 'Enable_No', true),
+        Markup.button.callback('30 min', 'Enable_Yes:30'),
+        Markup.button.callback('1 hour', 'Enable_Yes:60'),
+        Markup.button.callback('2 hours', 'Enable_Yes:120'),
+        Markup.button.callback('3 hours', 'Enable_Yes:180'),
+        Markup.button.callback('Cancel', 'Enable_No'),
       ])
     )
   }
