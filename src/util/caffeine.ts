@@ -5,7 +5,8 @@ export function isCaffeineModeEnabled(): boolean {
 }
 
 export function enableCaffeine(threshold: number) {
-  fs.writeFileSync(process.env.CAFFEINE_FILE_PATH, threshold.toString(), 'utf-8');
+  fs.writeFileSync(process.env.CAFFEINE_FILE_PATH, threshold.toString(), 'utf-8')
+  fs.chmodSync(process.env.CAFFEINE_FILE_PATH, 0o777)
 }
 
 export function disableCaffeine() {
