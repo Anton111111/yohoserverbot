@@ -2,6 +2,7 @@ import caffeineScene from "./scenes/caffeine"
 import helpScene from "./scenes/help"
 import plexScene, { plexRefreshAllScene } from "./scenes/plex"
 import torrentsScene from "./scenes/qbittorrent"
+import servicesRestartScene from "./scenes/services"
 import shutdownScene from "./scenes/shutdown"
 import summaryScene from "./scenes/summary"
 import suspendScene from "./scenes/suspend"
@@ -12,6 +13,7 @@ const commands = [
     { command: 'help', scene: helpScene, description: 'Read this help', help: 'Use /help to see this help.' },
     { command: 'summary', scene: summaryScene, description: 'View summary status', help: 'Use /summary to view summary status.' },
     { command: 'systeminfo', scene: systemInfoScene, description: 'View short system info', help: 'Use /systeminfo to get short system info.' },
+    { command: 'servicesrestart', scene: servicesRestartScene, description: 'Restart all services', help: 'Use /servicesrestart to restart all services (Plex, Torrserver, Torrents).' },
     { command: 'torrserver', scene: torrserverScene, description: 'View active torrents on Torrserver', help: 'Use /torrserver to view active torrents on Torrserver.' },
     { command: 'torrents', scene: torrentsScene, description: 'View list of torrents', help: 'Use /torrents to view list of torrents.' },
     { command: 'plex', scene: plexScene, description: 'View active sessions on Plex', help: 'Use /plex to view active sessions on Plex.' },

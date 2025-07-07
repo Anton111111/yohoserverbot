@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { exec } from 'child_process'
 
 interface Torrent {
   hash: string
@@ -36,6 +37,10 @@ export default async function getTorrserverTorrents(): Promise<Array<Torrent>> {
     /* empty */
   }
   return torrents
+}
+
+export function restart() {
+  exec('systemctl restart torrserver.service')
 }
 
 export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {

@@ -6,7 +6,7 @@ const helpScene = new Scenes.BaseScene<Scenes.SceneContext>('help')
 
 helpScene.enter((ctx) => ctx.reply(
   fmt`${bold`Yo, Ho!`}
-  ${commands.map((command) => command.help).join("\n")}
+${commands.map((command) => command.help).join("\n")}
 `,
 ))
 

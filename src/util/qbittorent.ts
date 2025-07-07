@@ -1,5 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
+import { exec } from 'child_process'
 
 interface QTorrent {
   hash: string
@@ -28,6 +29,10 @@ export async function getListOfTorrents(
     /* empty */
   }
   return torrents
+}
+
+export function restart() {
+  exec('systemctl restart qbittorrent-nox.service')
 }
 
 export async function getHTMLReport(returnIdleMessage: boolean = true): Promise<string> {
