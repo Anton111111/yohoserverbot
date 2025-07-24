@@ -2,6 +2,7 @@ import { Telegraf, Scenes, session } from 'telegraf'
 import auth from './middlewares/auth'
 import logger from './util/logger'
 import commands from './commands'
+import loginScene from './scenes/login'
 
 require('dotenv').config()
 
@@ -9,7 +10,9 @@ logger.info('Start YoHoServer Bot...')
 const bot = new Telegraf<Scenes.SceneContext>(process.env.TELEGRAM_BOT_TOKEN)
 bot.use(session())
 
-const stage = new Scenes.Stage<Scenes.SceneContext>(commands.map((command) => command.scene))
+const scenes = commands.map((command) => command.scene)
+scenes.push(loginScene)
+const stage = new Scenes.Stage<Scenes.SceneContext>(scenes)
 
 bot.use(stage.middleware())
 bot.use(auth)
