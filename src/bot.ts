@@ -17,7 +17,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>(scenes)
 bot.use(stage.middleware())
 bot.use(auth)
 commands.forEach(command => {
-  bot.command(command.command, (ctx) => ctx.scene.enter(command.command))
+  bot.command(command.command, (ctx) => ctx.scene.enter(command.scene.id))
 });
 
 
