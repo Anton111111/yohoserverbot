@@ -1,4 +1,5 @@
 import { Telegraf, Scenes, session } from 'telegraf'
+import * as https from 'https'
 import auth from './middlewares/auth'
 import logger from './util/logger'
 import commands from './commands'
@@ -7,7 +8,11 @@ import loginScene from './scenes/login'
 require('dotenv').config()
 
 logger.info('Start YoHoServer Bot...')
-const bot = new Telegraf<Scenes.SceneContext>(process.env.TELEGRAM_BOT_TOKEN)
+const bot = new Telegraf<Scenes.SceneContext>(process.env.TELEGRAM_BOT_TOKEN, {
+  telegram: {
+    agent: new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 }),
+  },
+})
 bot.use(session())
 
 const scenes = commands.map((command) => command.scene)
